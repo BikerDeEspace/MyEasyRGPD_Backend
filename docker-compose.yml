@@ -1,0 +1,78 @@
+version: '2'
+services:
+    
+    #DATABASE
+    db: 
+        image: postgres:9.6
+        environment: 
+            - DBROOTPASSWORD=postgres24
+            - DBROOTUSER=postgres
+            - POSTGRES_PASSWORD=pass_myeasyrgpd
+            - POSTGRES_USER=user_myeasyrgpd
+            - POSTGRES_DB=db_myeasyrgpd
+        volumes:
+            - back-easyrgpd-postgres-data:/var/lib/postgresql/data
+        networks: 
+        - back-easyrgpd.network
+
+    #SOURCES BACKEND
+    backend-php:
+        build:
+            context: ./php
+            dockerfile: Dockerfile
+            args:
+                - TIMEZONE=Europe/Luxembourg
+        volumes:
+            - easyrgpd-php-data:/var/www/symfony
+        networks: 
+        - back-easyrgpd.network
+
+    #NGINX BACKEND 
+    backend-nginx:
+        build:
+            context: ./nginx
+            dockerfile: Dockerfile
+        environment:
+            - VIRTUAL_HOST=<VIRTUAL_HOST>
+            - LETSENCRYPT_HOST=<LETSENCRYPT_HOST>
+            - LETSENCRYPT_EMAIL=<LETSENCRYPT_EMAIL>
+        volumes:
+            - back-easyrgpd-php-data:/var/www/symfony
+        depends_on:
+            - backend-php
+        networks: 
+        - back-easyrgpd.network
+
+    # NGINX PROXY
+    nginx-proxy:
+        image: jwilder/nginx-proxy
+        ports:
+            - "344:80"
+            - "443:443"
+        volumes:
+            - "/srv/docker/nginx/certs:/etc/nginx/certs:ro"
+            - "/etc/nginx/vhost.d"
+            - "/usr/share/nginx/html"
+            - "/var/run/docker.sock:/tmp/docker.sock:ro"
+        networks: 
+        - back-easyrgpd.network
+
+    nginx-proxy-companion:
+        image: jrcs/letsencrypt-nginx-proxy-companion
+        volumes:
+            - "/srv/docker/nginx/certs:/etc/nginx/certs:rw"
+            - "/var/run/docker.sock:/var/run/docker.sock"
+        volumes_from:
+            - nginx-proxy
+        networks: 
+        - back-easyrgpd.network
+
+#CONTAINERS NETWORK
+networks: 
+  back-easyrgpd.network:
+
+#CONTAINERS VOLUMES
+volumes:
+  back-easyrgpd-postgres-data:
+  back-easyrgpd-php-data:
+            
