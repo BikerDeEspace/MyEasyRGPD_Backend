@@ -51,7 +51,7 @@ COPY src/ /var/www/symfony
 WORKDIR /var/www/symfony
 
 #COPY .ENV FILE
-COPY .env /var/www/symfony/.env
+COPY app.env /var/www/symfony/.env
 COPY ./post_install_script /var/www/symfony/post_install_script
 
 # SET EXECUTE PERMISSIONS
