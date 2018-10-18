@@ -50,7 +50,7 @@ services:
         image: jwilder/nginx-proxy
         ports:
             #BACKEND port 344
-            - "344:80"
+            - "344:344"
             - "443:443"
         volumes:
             - "/srv/docker/nginx/certs:/etc/nginx/certs:ro"
