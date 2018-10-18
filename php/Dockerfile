@@ -54,11 +54,11 @@ WORKDIR /var/www/symfony
 COPY app.env /var/www/symfony/.env
 
 #COPY INIT SCRIPT
-COPY ./post_install_script/post_install.sh /var/www/symfony/post_install_script/post_install.sh
-COPY ./post_install_script/wait_postgres.sh /var/www/symfony/post_install_script/wait_postgres.sh
+COPY ./post_install_scripts/post_install.sh /var/www/symfony/post_install_scripts/post_install.sh
+COPY ./post_install_scripts/wait_postgres.sh /var/www/symfony/post_install_scripts/wait_postgres.sh
 # SET EXECUTE PERMISSIONS
-RUN ["chmod", "+x", "post_install_script/post_install.sh"]
-RUN ["chmod", "+x", "post_install_script/wait_postgres.sh"]
+RUN ["chmod", "+x", "post_install_scripts/post_install.sh"]
+RUN ["chmod", "+x", "post_install_scripts/wait_postgres.sh"]
 RUN ["chmod", "+x", "bin/console"]
 
 # COMPOSER INSTALL
