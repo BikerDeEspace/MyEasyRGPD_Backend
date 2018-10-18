@@ -52,8 +52,10 @@ WORKDIR /var/www/symfony
 
 #COPY .ENV FILE
 COPY app.env /var/www/symfony/.env
-COPY ./post_install_script /var/www/symfony/post_install_script
 
+#COPY INIT SCRIPT
+COPY ./post_install_script/post_install.sh /var/www/symfony/post_install_script/post_install.sh
+COPY ./post_install_script/wait_postgres.sh /var/www/symfony/post_install_script/wait_postgres.sh
 # SET EXECUTE PERMISSIONS
 RUN ["chmod", "+x", "post_install_script/post_install.sh"]
 RUN ["chmod", "+x", "post_install_script/wait_postgres.sh"]
