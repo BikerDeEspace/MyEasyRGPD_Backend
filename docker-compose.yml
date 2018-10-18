@@ -23,7 +23,7 @@ services:
             args:
                 - TIMEZONE=Europe/Luxembourg
         volumes:
-            - easyrgpd-php-data:/var/www/symfony
+            - back-easyrgpd-php-data:/var/www/symfony
         networks: 
         - back-easyrgpd.network
 
