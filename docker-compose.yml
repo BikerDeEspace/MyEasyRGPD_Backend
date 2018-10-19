@@ -30,11 +30,12 @@ services:
             dockerfile: Dockerfile
         environment:
             VIRTUAL_HOST: ${VIRTUAL_HOST}
-            VIRTUAL_PORT: ${VIRTUAL_PORT}
             LETSENCRYPT_HOST: ${LETSENCRYPT_HOST}
             LETSENCRYPT_EMAIL: ${LETSENCRYPT_EMAIL}
         env_file:
-        - .env
+            - .env
+        ports: 
+            - "<HOST_PORTS>:80"
         volumes:
             - back-easyrgpd-php-data:/var/www/symfony
         depends_on:
