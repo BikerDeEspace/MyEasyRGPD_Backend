@@ -5,13 +5,15 @@ services:
     db: 
         image: postgres:9.6
         environment: 
-            - DBROOTPASSWORD=postgres24
-            - DBROOTUSER=postgres
-            - POSTGRES_PASSWORD=pass_myeasyrgpd
-            - POSTGRES_USER=user_myeasyrgpd
-            - POSTGRES_DB=db_myeasyrgpd
+            POSTGRES_DB: ${DBNAME}
+            DBROOTUSER: ${DBROOTUSER}
+            DBROOTPASSWORD: ${DBROOTPASSWORD}
+            POSTGRES_USER: ${DBUSER}
+            POSTGRES_PASSWORD: ${DBPASSWORD}
         volumes:
-            - back-easyrgpd-postgres-data:/var/lib/postgresql/data
+            - ./backend-postgres-data:/var/lib/postgresql/data
+        env_file:
+            - ./php/app.env
 
     #SOURCES BACKEND
     backend-php:
@@ -21,7 +23,7 @@ services:
             args:
                 - TIMEZONE=Europe/Luxembourg
         volumes:
-            - back-easyrgpd-php-data:/var/www/symfony
+            - ./backend-php-data:/var/www/symfony
 
     #NGINX BACKEND 
     backend-nginx:
@@ -33,22 +35,17 @@ services:
             LETSENCRYPT_HOST: ${LETSENCRYPT_HOST}
             LETSENCRYPT_EMAIL: ${LETSENCRYPT_EMAIL}
         ports: 
-            - ${HOST_PORT}:80
+            - 80
         volumes:
-            - back-easyrgpd-php-data:/var/www/symfony
+            - ./backend-php-data:/var/www/symfony
         depends_on:
             - backend-php
         env_file:
-            - .env
+            - ./php/app.env
 
 #CONTAINERS NETWORK
 networks:
   default:
     external:
       name: nginx-proxy
-
-#CONTAINERS VOLUMES
-volumes:
-  back-easyrgpd-postgres-data:
-  back-easyrgpd-php-data:
             
