@@ -11,7 +11,7 @@ services:
             POSTGRES_USER: ${DBUSER}
             POSTGRES_PASSWORD: ${DBPASSWORD}
         volumes:
-            - ./backend-postgres-data:/var/lib/postgresql/data
+            - backend-postgres-data:/var/lib/postgresql/data
         env_file:
             - ./php/app.env
 
@@ -23,7 +23,7 @@ services:
             args:
                 - TIMEZONE=Europe/Luxembourg
         volumes:
-            - ./backend-php-data:/var/www/symfony
+            - backend-php-data:/var/www/symfony
 
     #NGINX BACKEND 
     backend-nginx:
@@ -37,11 +37,16 @@ services:
         ports: 
             - 80
         volumes:
-            - ./backend-php-data:/var/www/symfony
+            - backend-php-data:/var/www/symfony
         depends_on:
             - backend-php
         env_file:
             - .env
+
+volume:
+    backend-php-data:
+    backend-postgres-data:
+
 
 #CONTAINERS NETWORK
 networks:
