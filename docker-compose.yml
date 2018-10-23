@@ -41,7 +41,7 @@ services:
         depends_on:
             - backend-php
         env_file:
-            - ./php/app.env
+            - .env
 
 #CONTAINERS NETWORK
 networks:
