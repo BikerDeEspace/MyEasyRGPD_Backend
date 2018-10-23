@@ -10,10 +10,10 @@ services:
             DBROOTPASSWORD: ${DBROOTPASSWORD}
             POSTGRES_USER: ${DBUSER}
             POSTGRES_PASSWORD: ${DBPASSWORD}
-        volumes:
-            - backend-postgres-data:/var/lib/postgresql/data
         env_file:
             - ./php/app.env
+        volumes:
+            - backend-postgres-data:/var/lib/postgresql/data
 
     #SOURCES BACKEND
     backend-php:
@@ -43,7 +43,7 @@ services:
         env_file:
             - .env
 
-volume:
+volumes:
     backend-php-data:
     backend-postgres-data:
 
