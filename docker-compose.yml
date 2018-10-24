@@ -14,6 +14,9 @@ services:
             - .env
         volumes:
             - backend-postgres-data:/var/lib/postgresql/data
+        restart: unless-stopped
+        networks:
+            - backend-internal
 
     #SOURCES BACKEND
     backend-php:
@@ -24,6 +27,9 @@ services:
                 - TIMEZONE=Europe/Luxembourg
         volumes:
             - backend-php-data:/var/www/symfony
+        restart: unless-stopped
+        networks:
+            - backend-internal
 
     #NGINX BACKEND 
     backend-nginx:
@@ -42,6 +48,10 @@ services:
             - backend-php
         env_file:
             - .env
+        restart: unless-stopped
+        networks:
+            - nginx-proxy
+            - backend-internal
 
 volumes:
     backend-php-data:
@@ -50,6 +60,7 @@ volumes:
 
 #CONTAINERS NETWORK
 networks:
+  backend-internal:
   default:
     external:
       name: nginx-proxy
