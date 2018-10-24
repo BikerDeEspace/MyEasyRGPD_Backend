@@ -50,7 +50,7 @@ services:
             - .env
         restart: unless-stopped
         networks:
-            - nginx-proxy
+            - default
             - backend-internal
 
 volumes:
