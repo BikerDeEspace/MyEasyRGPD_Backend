@@ -11,7 +11,7 @@ services:
             POSTGRES_USER: ${DBUSER}
             POSTGRES_PASSWORD: ${DBPASSWORD}
         env_file:
-            - ./php/app.env
+            - .env
         volumes:
             - backend-postgres-data:/var/lib/postgresql/data
 
