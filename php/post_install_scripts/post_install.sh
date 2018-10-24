@@ -23,14 +23,14 @@ bin/console doctrine:migrations:migrate --no-interaction
 
 export PGPASSWORD=${DBPASSWORD}
 ## CREATE DEFAULT USER
-if [ ${CREATE_USER} == "TRUE" ]; then
+if [ "${CREATE_USER}" = "TRUE" ]; then
     echo '** CREATE DEFAULT SUPER USER **'
     bin/console pia:user:create ${USER_MAIL} ${USER_PASSWORD} 
     bin/console pia:user:promote ${USER_MAIL} --role=ROLE_SUPER_ADMIN
 fi
 
 ## CREATE DEFAULT APP
-if [ ${CREATE_APP} == "TRUE" ]; then
+if [ "${CREATE_APP}" = "TRUE" ]; then
     echo '** CREATE DEFAULT APP **'
     bin/console pia:application:create --name="${CLIENT_NAME}" --url="${CLIENTURL}" --client-id=${CLIENT_ID} --client-secret=${CLIENT_SECRET}
 fi
