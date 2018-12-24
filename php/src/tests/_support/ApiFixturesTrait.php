@@ -15,17 +15,16 @@ trait ApiFixturesTrait
     private $piaDatas = [
         'author_name'                       => 'codecept-author',
         'evaluator_name'                    => 'codecept-evaluator',
+        'name'                              => 'codecept-name',
         'validator_name'                    => 'codecept-validator',
         'type'                              => 'regular',
         'concerned_people_searched_opinion' => 0,
-        'processing'                        => [
-            'id' => null,
-        ],
     ];
 
     private $piaJsonType = [
         'progress'                          => 'integer',
         'status'                            => 'integer',
+        'name'                              => 'string',
         'author_name'                       => 'string',
         'evaluator_name'                    => 'string',
         'validator_name'                    => 'string',
@@ -36,10 +35,11 @@ trait ApiFixturesTrait
         'concerned_people_searched_opinion' => 'boolean',
         'concerned_people_searched_content' => 'string|null',
         'rejection_reason'                  => 'string|null',
-        'applied_adjustments'               => 'string|null',
+        'applied_adjustements'              => 'string|null',
         'dpos_names'                        => 'string|null',
         'people_names'                      => 'string|null',
         'is_example'                        => 'boolean',
+        'folder'                            => 'array|null',
         'id'                                => 'integer',
         'created_at'                        => 'string',
         'updated_at'                        => 'string',
@@ -52,7 +52,9 @@ trait ApiFixturesTrait
     {
         $I->login();
 
-        $I->sendJsonToCreate('/pias', $this->piaDatas);
+        $I->amBearerAuthenticated($I->getToken());
+        $I->haveHttpHeader('Content-Type', 'application/json');
+        $I->sendPOST('/pias', $this->piaDatas);
 
         $this->pia = json_decode(json_encode($I->getPreviousResponse()), JSON_OBJECT_AS_ARRAY);
     }
@@ -61,36 +63,10 @@ trait ApiFixturesTrait
     {
         $I->login();
 
-        $I->sendJsonToDelete('/pias/' . $this->pia['id']);
+        $I->amBearerAuthenticated($I->getToken());
+        $I->haveHttpHeader('Content-Type', 'application/json');
+        $I->sendDELETE('/pias/' . $this->pia['id']);
 
         $this->pia = [];
-    }
-
-    private function createTestProcessing(\ApiTester $I): void
-    {
-        $I->login();
-
-        $processingData = [
-            'name'                  => 'Processing CI',
-            'folder'                => $I->getRootFolder(),
-            'author'                => 'Author 1',
-            'designated_controller' => 'Designated controller',
-        ];
-
-        $I->sendJsonToCreate('/processings', $processingData);
-
-        $this->processing = json_decode(json_encode($I->getPreviousResponse()), JSON_OBJECT_AS_ARRAY);
-
-        $this->piaDatas['processing']['id'] = $this->processing['id'];
-    }
-
-    private function removeTestProcessing(\ApiTester $I): void
-    {
-        $I->login();
-
-        $I->sendJsonToDelete('/processings/' . $this->processing['id']);
-
-        $this->processing = null;
-        $this->piaDatas['processing']['id'] = null;
     }
 }

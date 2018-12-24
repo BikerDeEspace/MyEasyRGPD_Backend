@@ -45,7 +45,7 @@ class ProfileCest
         $I->seeResponseMatchesJsonType($this->attachmentJsonType);
 
         $I->seeResponseContainsJson([
-            'email' => $I->getUser(),
+            'username' => $I->getUser(),
         ]);
     }
 }

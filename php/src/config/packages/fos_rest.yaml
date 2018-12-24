@@ -1,7 +1,10 @@
 # Read the documentation: https://symfony.com/doc/master/bundles/FOSRestBundle/index.html
 fos_rest:
     zone:
-        - { path: '%api_pattern%' }
+        - { path: ^/pias }
+        - { path: ^/profile }
+        - { path: ^/pia-templates }
+        - { path: ^/folders }
     body_converter:
         enabled: true
     body_listener:

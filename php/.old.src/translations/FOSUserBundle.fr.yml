@@ -1,0 +1,23 @@
+resetting:
+    email:
+        message: |
+            Bonjour %username% !
+
+            Pour (ré)initialiser votre mot de passe, merci de vous rendre sur %confirmationUrl%
+
+            Cordialement,
+            L'équipe MyEasyRGPD 
+        message_html: >
+            <p>Bonjour <b>%username%</b> !</p>
+
+            <p>Pour (ré)initialiser votre mot de passe, merci de vous rendre sur <a href="%confirmationUrl%">%confirmationUrl%</a></p>
+
+            <p>Cordialement,<br />
+            L'équipe MyEasyRGPD</p>
+    request:
+        cancel: Annuler
+        submit: Réinitialiser
+
+security:
+    login:
+        password_forgotten: Mot de passe oublié ?

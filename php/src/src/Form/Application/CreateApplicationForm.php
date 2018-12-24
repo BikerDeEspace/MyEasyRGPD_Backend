@@ -32,8 +32,6 @@ class CreateApplicationForm extends BaseForm
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        parent::buildForm($builder, $options);
-
         $builder
             ->add('name', TextType::class, [
                 'label' => 'pia.applications.forms.create.name',

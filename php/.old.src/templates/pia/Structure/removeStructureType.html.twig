@@ -1,0 +1,46 @@
+{% trans_default_domain 'Pia' %}
+
+{% set structureType = form.vars.value %}
+
+<div class="ui negative message">
+    <div class="ui clearing basic segment">
+        <div class="header">
+            {{ 'pia.structure_types.modals.remove.title'|trans }}
+        </div>
+        <i style="float:right;">{{ 'pia.structure_types.modals.remove.sub_title'|trans }}</i>
+    </div>
+</div>
+
+<table class="ui single line table">
+    <thead>
+        <tr>
+            <th colspan="100%">
+                {{ 'pia.structure_types.modals.remove.resume.structure_type'|trans }}
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td class="collapsing">
+                <i class="chevron right icon"></i>
+                <b>{{ 'pia.structure_types.modals.remove.resume.name'|trans }}</b>
+            </td>
+            <td>{{ structureType.name }}</td>
+        </tr>
+        <tr>
+            <td class="collapsing">
+                <i class="building icon"></i>
+                <b>{{ 'pia.structure_types.modals.remove.resume.structures_number'|trans }}</b>
+            </td>
+            <td>{{ structureType.structures|length }}</td>
+        </tr>
+    </tbody>
+</table>
+
+{{ form_start(form) }}
+
+{% do form.submit.setRendered() %}
+
+<input type="submit" class="ui fluid red button" value="{{ 'pia.actions.remove'|trans }}"/>
+
+{{ form_end(form) }}

@@ -1,5 +1,5 @@
 pia:
-    app_name: MyEasyRGPD
+    app_name: PiaLab
 
     http_error:
         503: >
@@ -19,7 +19,6 @@ pia:
         navbar:
             users: Utilisateurs
             applications: Applications
-            portfolios: Portefeuilles
             structures: Structures
             templates: Gabarits
             logged_in_as: Connecté en tant que
@@ -31,16 +30,11 @@ pia:
         display: Afficher
         edit: Modifier
         remove: Supprimer
-        dissociate: Dissocier
 
     labels:
         yes: Oui
         no: Non
         n_a: N/A
-
-    flashes:
-        a_functional_administrator_must_be_assigned_to_a_structure: Un administrateur fonctionnel doit être assigné à une structure
-        user_emails_must_be_unique: Un utilisateur avec cette addresse email existe déjà. Les addresses emails doivent être uniques
 
     applications:
         title: Applications
@@ -51,8 +45,8 @@ pia:
             url: URL
             urls: URLs
             grant_types: Autorisations
-            client_id: Client ID
-            client_secret: Client Secret
+            client_id: Identifiant Client
+            client_secret: Clé Client
 
         add:
             title: Ajouter une application
@@ -66,7 +60,7 @@ pia:
                     name: Nom
                     url: URL
                     urls: URLs de redirection
-                    user_number: "Utilisateurs associés"
+                    user_number: "Nombre d'utilisateur associé"
                     tokens: Jetons de connexion
                     currently_valid: en cours de validité
 
@@ -94,7 +88,7 @@ pia:
 
 
     templates:
-        title: Gabarits de Traitement
+        title: Gabarits de PIA
 
         list:
             id: "#"
@@ -105,11 +99,11 @@ pia:
             filename: Nom du fichier
             created_at: Créé le
             updated_at: Mis à jour le
-            structures_number: Structures
-            structure_types_number: Types de structure
+            structures_number: Nombre de structure
+            structure_types_number: Nombre de type de structure
 
         add:
-            title: Ajouter un gabarit
+            title: Ajouter une application
 
         modals:
             remove:
@@ -118,7 +112,7 @@ pia:
                 resume:
                     template: Gabarit
                     name: Nom
-                    processing_number: Traitements issues de ce gabarit
+                    pias_number: Nombre de PIA issue de ce gabarit
 
         forms:
             create:
@@ -144,8 +138,8 @@ pia:
             id: "#"
             name: Nom
             type: Type
-            users_number: "Utilisateurs"
-            processing_number: Traitements
+            users_number: "Nb d'utilisateur"
+            pias_number: Nb de PIA
             created_at: Créé le
 
         add:
@@ -158,21 +152,16 @@ pia:
                 resume:
                     structure: Structure
                     name: Nom
-                    users_number: "Utilisateurs associés"
-                    processing_number: Traitements associés
+                    users_number: "Nombre d'utilisateur associé"
+                    pias_number: Nombre de PIA associée
 
         forms:
             create:
                 name: Nom
                 type: Type de structure
-                portfolio: Portefeuille client
                 submit: Créer la structure
-            assoc:
-                portfolio: Portefeuille client
-                structures: Structures à associer
-                submit: Associer les structures
             edit:
-                templates: Gabarits de Traitement disponibles
+                templates: Gabarits de PIA disponibles
                 templates_help: Les gabarits sélectionnés seront accessibles à cette structure
 
                 cancel: Annuler
@@ -186,7 +175,7 @@ pia:
         list:
             id: "#"
             name: Nom
-            structures_number: "Structures"
+            structures_number: "Nb de structure"
 
         add:
             title: Ajouter un type de structure
@@ -198,14 +187,14 @@ pia:
                 resume:
                     structure_type: Type de structure
                     name: Nom
-                    structures_number: Structures associées
+                    structures_number: Nombre de structure associée
 
         forms:
             create:
                 name: Nom
                 submit: Créer le type de structure
             edit:
-                templates: Gabarits de Traitement disponibles
+                templates: Gabarits de PIA disponibles
                 templates_help: Les gabarits sélectionnés seront accessibles à toutes les structures de ce type de structure
                 cancel: Annuler
                 submit: Enregistrer le type de structure
@@ -254,7 +243,6 @@ pia:
                 email: Adresse email
                 password: Mot de passe
                 roles: Rôles
-                portfolios: Portefeuilles client
                 sendResettingEmail: "Envoyer l'email de RàZ de mot de passe ?"
                 sendResettingEmail_help: "Envoyer automatiquement l'email de réinitialisation de mot de passe à l'adresse email saisie"
                 submit: "Créer l'utilisateur"
@@ -280,7 +268,6 @@ pia:
                 ROLE_USER : Invité
                 ROLE_CONTROLLER : Responsable de Traitement
                 ROLE_DPO : DPO
-                ROLE_SHARED_DPO : DPO Mutualisé
                 ROLE_ADMIN : Administrateur Fonctionnel
                 ROLE_TECHNICAL_ADMIN  : Administrateur Technique
                 ROLE_SUPER_ADMIN  : Super Administrateur
@@ -308,34 +295,3 @@ pia:
                 return_to_application: Retouner vers l'application
             request:
                 back: Retour
-
-    portfolios:
-        title: Portefeuilles
-
-        list:
-            id: "#"
-            name: Libellé
-            structures_number: "Structures"
-
-        add:
-            title: Ajouter un portefeuille
-
-        modals:
-            remove:
-                title: Êtes vous certain de vouloir supprimer ce portefeuille ?
-                sub_title: (cliquez sur ce message pour annuler)
-                resume:
-                    structure_type: portefeuille
-                    name: Libellé
-                    structures_number: Structures associées
-
-        forms:
-            create:
-                name: Libellé
-                structures: Structures associées
-                submit: Créer le portefeuille
-            edit:
-                cancel: Annuler
-                submit: Enregistrer le portefeuille
-            remove:
-                submit: Supprimer le portefeuille
