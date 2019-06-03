@@ -1,7 +1,0 @@
-[template]
-src = "acceptance.suite.yml.tmpl"
-dest = "tests/acceptance.suite.yml"
-keys = [
-       "/selenium/hostname",
-       "/url/addr",
-]
