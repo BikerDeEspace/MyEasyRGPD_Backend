@@ -6,7 +6,7 @@ resetting:
             Pour (ré)initialiser votre mot de passe, merci de vous rendre sur %confirmationUrl%
 
             Cordialement,
-            L'équipe MyEasyRGPD
+            L'équipe MyEasyRGPD 
         message_html: >
             <p>Bonjour <b>%username%</b> !</p>
 
