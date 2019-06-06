@@ -80,12 +80,12 @@ fi
 
 if [ -z "$MailerSender" ]
 then
-    MailerSender=no-reply@lusis.lu
+    MailerSender=no-reply@pialab.io
 fi
 
 if [ -z "$MailerSenderName" ]
 then
-    MailerSenderName='MyEasyRGPD Account Manager'
+    MailerSenderName='PiaLab Account Manager'
 fi
 
 if [ -z "${CLIENTURL}" ]
@@ -109,7 +109,7 @@ fi
 # Apache Conf
 if [ -z "${ServerName}" ]
 then
-    ServerName=lusis.lu
+    ServerName=pialab.io
     if [ -n "${BackUrl}" ]
     then
         ServerName=$(echo $BackUrl | sed -e s:.*//::g | sed -e s:/.*::g | sed -e s/:.*//g )

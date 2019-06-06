@@ -2,8 +2,8 @@ nelmio_api_doc:
     documentation:
         schemes: [http]
         info:
-            title: MyEasyRGPD API
-            description: API documentation for MyEasyRGPD
+            title: Pialab API
+            description: API documentation for Pialab
             version: 1.2.4
         securityDefinitions:
             Bearer:
