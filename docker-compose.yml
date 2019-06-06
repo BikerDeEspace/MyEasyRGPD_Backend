@@ -10,11 +10,11 @@ services:
             DBROOTPASSWORD: ${DBROOTPASSWORD}
             POSTGRES_USER: ${DBUSER}
             POSTGRES_PASSWORD: ${DBPASSWORD}
+        volumes:
+            - ${DBVOLUMEFOLDER}:/var/lib/postgresql/data
+        restart: unless-stopped
         env_file:
             - .env
-        volumes:
-            - backend-postgres-data:/var/lib/postgresql/data
-        restart: unless-stopped
         networks:
             - backend-internal
 
@@ -55,9 +55,7 @@ services:
 
 volumes:
     backend-php-data:
-    backend-postgres-data:
-
-
+    
 #CONTAINERS NETWORK
 networks:
   backend-internal:

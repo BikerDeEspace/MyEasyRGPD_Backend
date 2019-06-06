@@ -12,7 +12,6 @@ namespace PiaApi\Services;
 
 use PiaApi\Entity\Pia\Structure;
 use PiaApi\Entity\Pia\StructureType;
-use PiaApi\Entity\Pia\Portfolio;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 class StructureService extends AbstractService
@@ -41,13 +40,15 @@ class StructureService extends AbstractService
      *
      * @return Structure
      */
-    public function createStructure(string $name, ?StructureType $structureType = null, ?Portfolio $portfolio = null): Structure
+    public function createStructure(string $name, ?StructureType $structureType = null): Structure
     {
         $structure = new Structure($name);
 
         $this->folderService->createFolder('root', $structure);
-        $structure->setType($structureType);
-        $structure->setPortfolio($portfolio);
+
+        if ($structureType !== null) {
+            $structure->setType($structureType);
+        }
 
         return $structure;
     }

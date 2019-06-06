@@ -42,51 +42,35 @@ class RoleHierarchy
         $this->roleHierarchy = $roleHierarchy;
     }
 
-    protected function getUserRoles(User $user): array
+    public function getUserAccessibleRoles(): array
     {
+        $userRoleNames = $this->user->getRoles();
+
         $userRoles = array_map(function ($roleName) {
             return new Role($roleName);
-        }, $user->getRoles());
-
-        return $userRoles;
-    }
-
-    protected function getReachableRoles(User $user): array
-    {
-        // Core roleHierarchy needs a Role array but we use string array
-        $userRoles = $this->getUserRoles($user);
+        }, $userRoleNames);
 
         $reachableRoleNames = array_map(function ($role) {
             return $role->getRole();
         }, $this->roleHierarchy->getReachableRoles($userRoles));
 
-        return $reachableRoleNames;
-    }
+        $roleNames = array_filter($this->definedRoles, function ($roleName) use ($reachableRoleNames) {
+            return in_array($roleName, $reachableRoleNames);
+        });
 
-    protected function getAcessibleRoles(User $user): array
-    {
-        $reachableRoleNames = $this->getReachableRoles($user);
-
-        return array_intersect($this->definedRoles, $reachableRoleNames);
-    }
-
-    public function getUserAccessibleRoles(): array
-    {
-        return $this->getAcessibleRoles($this->user);
+        return $roleNames;
     }
 
     public function isGranted(User $user, string $roleOrPermission)
     {
-        $reachableRoleNames = $this->getReachableRoles($user);
+        $userRoles = array_map(function ($roleName) {
+            return new Role($roleName);
+        }, $user->getRoles());
+
+        $reachableRoleNames = array_map(function ($role) {
+            return $role->getRole();
+        }, $this->roleHierarchy->getReachableRoles($userRoles));
 
         return in_array($roleOrPermission, $reachableRoleNames);
-    }
-
-    public function hasHigherRole(User $current_user, User $other_user)
-    {
-        $current_roles = $this->getAcessibleRoles($current_user);
-        $other_roles = $this->getAcessibleRoles($other_user);
-
-        return count($current_roles) >= count($other_roles);
     }
 }

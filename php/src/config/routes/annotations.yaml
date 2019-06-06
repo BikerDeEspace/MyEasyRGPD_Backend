@@ -6,5 +6,5 @@ home:
     path: /
     controller: Symfony\Bundle\FrameworkBundle\Controller\RedirectController::urlRedirectAction
     defaults:
-        path: /home
+        path: /manageUsers
         permanent: true
