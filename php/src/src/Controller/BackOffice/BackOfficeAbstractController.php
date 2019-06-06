@@ -41,9 +41,4 @@ class BackOfficeAbstractController extends Controller
 
         return $pagerfanta;
     }
-
-    public function getQueryRedirectUrl(Request $request): ?string
-    {
-        return $request->query->get('redirect', null) ?? $request->request->get('redirect', null);
-    }
 }

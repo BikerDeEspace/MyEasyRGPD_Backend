@@ -41,7 +41,7 @@ class StructureType
     protected $structures;
 
     /**
-     * @ORM\ManyToMany(targetEntity="ProcessingTemplate", mappedBy="structureTypes")
+     * @ORM\ManyToMany(targetEntity="PiaTemplate", mappedBy="structureTypes")
      * @JMS\Exclude()
      *
      * @var Collection
@@ -89,7 +89,7 @@ class StructureType
     }
 
     /**
-     * @return array|ProcessingTemplate[]
+     * @return array|PiaTemplate[]
      */
     public function getTemplates(): array
     {
@@ -97,11 +97,11 @@ class StructureType
     }
 
     /**
-     * @param ProcessingTemplate $template
+     * @param PiaTemplate $template
      *
      * @throws InvalidArgumentException
      */
-    public function addTemplate(ProcessingTemplate $template): void
+    public function addTemplate(PiaTemplate $template): void
     {
         if ($this->templates->contains($template)) {
             throw new \InvalidArgumentException(sprintf('Template « %s » is already in StructureType', $template));
@@ -111,11 +111,11 @@ class StructureType
     }
 
     /**
-     * @param ProcessingTemplate $template
+     * @param PiaTemplate $template
      *
      * @throws InvalidArgumentException
      */
-    public function removeTemplate(ProcessingTemplate $template): void
+    public function removeTemplate(PiaTemplate $template): void
     {
         if (!$this->templates->contains($template)) {
             throw new \InvalidArgumentException(sprintf('Template « %s » is not in StructureType', $template));

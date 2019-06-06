@@ -30,6 +30,7 @@ class PiaFoldersCest
         'rgt'        => 'integer',
         'parent'     => 'array|null',
         'children'   => 'array',
+        'pias'       => 'array',
         'id'         => 'integer',
         'created_at' => 'string',
         'updated_at' => 'string',
@@ -163,7 +164,7 @@ class PiaFoldersCest
         ];
 
         $I->haveHttpHeader('Content-Type', 'application/json');
-        $I->sendPUT('/folders/' . $folderToBeMoved['id'], $folderToBeMoved);
+        $I->sendPOST('/folders/' . $folderToBeMoved['id'], $folderToBeMoved);
 
         $I->seeResponseCodeIs(HttpCode::OK);
         $I->seeResponseIsJson();
@@ -220,7 +221,7 @@ class PiaFoldersCest
         $I->login();
 
         $I->haveHttpHeader('Content-Type', 'application/json');
-        $I->sendDELETE('/folders/' . $this->rootFolderId . '?force=true');
+        $I->sendDELETE('/folders/' . $this->rootFolderId);
 
         $I->seeResponseCodeIs(HttpCode::OK);
         $I->seeResponseIsJson();
