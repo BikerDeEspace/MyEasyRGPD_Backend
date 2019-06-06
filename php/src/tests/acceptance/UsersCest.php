@@ -16,7 +16,7 @@ class UsersCest
 {
     private $firstname = 'John';
     private $lastname = 'Doe';
-    private $email = 'selenium@pialab.io';
+    private $email = 'selenium@lusis.lu';
     private $password = 'kFR5C1EGaPZDFJ1A';
 
     public function create_new_super_admin_user_test(Webguy $I)
@@ -64,14 +64,14 @@ class UsersCest
 
         $formName = 'form[name="edit_user_form"]';
 
-        // Changing from « selenium@pialab.io » to « edited-selenium@pialab.io »
+        // Changing from « selenium@lusis.lu » to « edited-selenium@lusis.lu »
 
         $I->click('//td[contains(text(), "' . $this->email . '")]/ancestor::tr/descendant::a[contains(@href,"/manageUsers/editUser/")]');
         $I->waitForElementVisible($formName . ' input[name="edit_user_form[email]"]');
         $I->fillField('edit_user_form[email]', 'edited-' . $this->email);
         $I->click('[name="edit_user_form[submit]"]');
 
-        // Changing from « edited-selenium@pialab.io » to « selenium@pialab.io »
+        // Changing from « edited-selenium@lusis.lu » to « selenium@lusis.lu »
 
         $I->click('//td[contains(text(), "edited-' . $this->email . '")]/ancestor::tr/descendant::a[contains(@href,"/manageUsers/editUser/")]');
         $I->waitForElementVisible($formName . ' input[name="edit_user_form[email]"]');

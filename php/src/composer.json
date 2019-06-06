@@ -33,7 +33,7 @@
         "white-october/pagerfanta-bundle": "^1.1"
     },
     "require-dev": {
-        "codeception/codeception": "^2.4",
+        "codeception/codeception": "2.4.0",
         "flow/jsonpath": "^0.4.0",
         "guzzlehttp/guzzle": "^6.3",
         "symfony/phpunit-bridge": "^4.0",
@@ -56,7 +56,7 @@
         "psr-4": {
             "PiaApi\\Tests\\": "tests/"
         }
-    }, 
+    },
     "replace": {
         "symfony/polyfill-iconv": "*",
         "symfony/polyfill-php71": "*",
@@ -90,5 +90,5 @@
             "allow-contrib": false
         }
     },
-    "version": "1.2.6"
+    "version": "1.4.18"
 }
