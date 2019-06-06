@@ -1,13 +1,11 @@
-<img src="https://raw.githubusercontent.com/pia-lab/pialab/master/src/assets/images/pia-lab.png">
-
-# Pialab-backend
+# MyEasyRGPD-backend
 
 ## Installation
 
 Installation process (not for production environments) :
 
 ```bash
-git clone https://github.com/pia-lab/pialab-back
+git clone https://github.com/BikerDeEspace/MyEasyRGPD_back.git
 cd pialab-back
 ```
 

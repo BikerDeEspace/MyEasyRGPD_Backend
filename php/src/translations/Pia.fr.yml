@@ -1,5 +1,5 @@
 pia:
-    app_name: PiaLab
+    app_name: MyEasyRGPDMyEasyRGPD
 
     http_error:
         503: >
