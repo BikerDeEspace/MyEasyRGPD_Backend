@@ -10,25 +10,33 @@
 
 namespace PiaApi\Form\User;
 
-use PiaApi\Form\User\Type\RolesType;
-use Symfony\Component\Form\Extension\Core\Type\ButtonType;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
-use Symfony\Component\Form\Extension\Core\Type\DateType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
-use PiaApi\Form\Portfolio\Type\PortfolioChoiceType;
-use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\ButtonType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Bridge\Doctrine\RegistryInterface;
+use PiaApi\Form\Application\Transformer\ApplicationTransformer;
+use PiaApi\Form\Structure\Transformer\StructureTransformer;
+use PiaApi\Form\User\Transformer\UserProfileTransformer;
+use PiaApi\Form\Type\RolesType;
 
 class EditUserForm extends CreateUserForm
 {
-    public function configureOptions(OptionsResolver $resolver)
-    {
-        parent::configureOptions($resolver);
+    /**
+     * @var UserProfileTransformer
+     */
+    protected $profileTransformer;
 
-        $resolver->setDefaults([
-            'hasPortfolio' => false,
-        ]);
+    public function __construct(
+      RegistryInterface $doctrine,
+        UserProfileTransformer $profileTransformer,
+        ApplicationTransformer $applicationTransformer,
+        StructureTransformer $structureTransformer
+    ) {
+        parent::__construct($doctrine, $applicationTransformer, $structureTransformer);
+        $this->profileTransformer = $profileTransformer;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -41,10 +49,10 @@ class EditUserForm extends CreateUserForm
             ->remove('sendResettingEmail')
 
             ->add('username', TextType::class, [
-                'label' => 'pia.users.forms.edit.username',
+                'label'    => 'pia.users.forms.edit.username',
             ])
             ->add('profile', UserProfileForm::class, [
-                'label' => false,
+                'label'   => false,
             ])
             ->add('roles', RolesType::class, [
                 'required' => false,
@@ -53,8 +61,8 @@ class EditUserForm extends CreateUserForm
                 'label'    => 'pia.users.forms.edit.roles',
             ])
             ->add('expirationDate', DateType::class, [
-                'widget' => 'single_text',
-                'label'  => 'pia.users.forms.edit.expirationDate',
+                'widget'   => 'single_text',
+                'label'    => 'pia.users.forms.edit.expirationDate',
             ])
             ->add('enabled', CheckboxType::class, [
                 'required' => false,
@@ -63,11 +71,6 @@ class EditUserForm extends CreateUserForm
             ->add('locked', CheckboxType::class, [
                 'required' => false,
                 'label'    => 'pia.users.forms.edit.locked',
-            ])
-            ->add('portfolios', PortfolioChoiceType::class, [
-                'required' => false,
-                'multiple' => true,
-                'label'    => 'pia.users.forms.create.portfolios',
             ])
             ->add('cancel', ButtonType::class, [
                 'attr' => [
@@ -84,8 +87,6 @@ class EditUserForm extends CreateUserForm
                 'label' => 'pia.users.forms.edit.submit',
             ]);
 
-        if ($options['hasPortfolio'] === false) {
-            $builder->remove('portfolios');
-        }
+        $builder->get('profile')->addModelTransformer($this->profileTransformer);
     }
 }

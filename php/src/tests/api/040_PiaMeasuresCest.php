@@ -40,7 +40,6 @@ class PiaMeasuresCest
 
     public function create_pia_test(ApiTester $I)
     {
-        $this->createTestProcessing($I);
         $this->createTestPia($I);
     }
 
@@ -174,6 +173,5 @@ class PiaMeasuresCest
     public function remove_pia_test(ApiTester $I)
     {
         $this->removeTestPia($I);
-        $this->removeTestProcessing($I);
     }
 }

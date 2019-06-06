@@ -69,7 +69,6 @@ class CreateUserCommand extends Command
             ->addArgument('password', InputArgument::OPTIONAL, 'The user\'s password')
             ->addOption('email', null, InputOption::VALUE_REQUIRED, 'The user\'s email')
             ->addOption('password', null, InputOption::VALUE_REQUIRED, 'The user\'s password')
-            ->addOption('username', null, InputOption::VALUE_REQUIRED, 'The user\'s username (alias)')
             ->addOption('firstName', null, InputOption::VALUE_REQUIRED, 'The user\'s first name')
             ->addOption('lastName', null, InputOption::VALUE_REQUIRED, 'The user\'s last name')
             ->addOption('structure', null, InputOption::VALUE_REQUIRED, 'The user\'s structure')
@@ -104,7 +103,6 @@ class CreateUserCommand extends Command
         $appName = $input->getOption('application', null);
         $firstName = $input->getOption('firstName', null);
         $lastName = $input->getOption('lastName', null);
-        $username = $input->getOption('username', null);
 
         $structure = null;
         $application = null;
@@ -133,8 +131,7 @@ class CreateUserCommand extends Command
             $email,
             $password,
             $structure,
-            $application,
-            $username
+            $application
         );
 
         if ($firstName !== null) {
@@ -147,7 +144,7 @@ class CreateUserCommand extends Command
         $this->entityManager->persist($user);
         $this->entityManager->flush();
 
-        if ($input->getOption('sendResetEmail') === true) {
+        if ($input->getOption('sendResetEmail') !== null) {
             $this->userService->sendResettingEmail($user);
         }
 
