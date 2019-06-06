@@ -33,8 +33,6 @@ class PiaCest
 
     public function create_pia_test(\ApiTester $I)
     {
-        $this->createTestProcessing($I);
-
         $I->amGoingTo('Create a PIA');
 
         $I->login();
@@ -67,7 +65,7 @@ class PiaCest
 
         $I->seeResponseMatchesJsonType($this->piaJsonType);
 
-        $I->seeResponseContainsJson(['author_name' => $this->piaDatas['author_name']]);
+        $I->seeResponseContainsJson(['name' => $this->piaDatas['name']]);
     }
 
     /**
@@ -79,7 +77,7 @@ class PiaCest
 
         $I->login();
 
-        $this->pia['author_name'] = $this->piaDatas['author_name'] . '-edited';
+        $this->pia['name'] = $this->piaDatas['name'] . '-edited';
 
         $I->haveHttpHeader('Content-Type', 'application/json');
         $I->sendPUT('/pias/' . $this->pia['id'],
@@ -91,7 +89,7 @@ class PiaCest
 
         $I->seeResponseMatchesJsonType($this->piaJsonType);
 
-        $I->canSeeResponseContainsJson(['author_name' => $this->piaDatas['author_name'] . '-edited']);
+        $I->canSeeResponseContainsJson(['name' => $this->piaDatas['name'] . '-edited']);
     }
 
     /**
@@ -105,8 +103,6 @@ class PiaCest
 
         $I->haveHttpHeader('Content-Type', 'application/json');
         $I->sendDELETE('/pias/' . $this->pia['id']);
-
-        $this->removeTestProcessing($I);
 
         $I->seeResponseCodeIs(HttpCode::OK);
     }

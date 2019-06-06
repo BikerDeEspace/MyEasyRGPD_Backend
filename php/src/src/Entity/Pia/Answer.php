@@ -61,14 +61,4 @@ class Answer implements Timestampable
     {
         $this->data = $data;
     }
-
-    public function getReferenceTo(): string
-    {
-        return $this->referenceTo;
-    }
-
-    public function setReferenceTo(string $ref)
-    {
-        $this->referenceTo = $ref;
-    }
 }
