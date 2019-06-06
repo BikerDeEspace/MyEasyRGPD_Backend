@@ -12,18 +12,18 @@ else
     exit 42
 fi
 
-userexist=$(psql -qt --no-align -w -h ${DBHOST} -c "select count(*) from pia_user where email='lici@lusis.lu';" -U ${DBUSER} -d ${DBNAME}  )
+userexist=$(psql -qt --no-align -w -h ${DBHOST} -c "select count(*) from pia_user where email='lici@pialab.io';" -U ${DBUSER} -d ${DBNAME}  )
 
 if [ $userexist -eq 0 ]
 then
-    bin/console pia:user:create lici@lusis.lu pia42
-    bin/console pia:user:promote lici@lusis.lu --role=ROLE_SUPER_ADMIN
+    bin/console pia:user:create lici@pialab.io pia42
+    bin/console pia:user:promote lici@pialab.io --role=ROLE_SUPER_ADMIN
 fi
 
-testuserexist=$(psql -qt --no-align -w -h ${DBHOST} -c "select count(*) from pia_user where email='api@lusis.lu';" -U ${DBUSER} -d ${DBNAME}  )
+testuserexist=$(psql -qt --no-align -w -h ${DBHOST} -c "select count(*) from pia_user where email='api@pialab.io';" -U ${DBUSER} -d ${DBNAME}  )
 
 if [ $testuserexist -eq 0 ]
 then
-    bin/console pia:user:create api@lusis.lu api42 --application="Default App"
-    bin/console pia:user:promote api@lusis.lu --role=ROLE_DPO 
+    bin/console pia:user:create api@pialab.io api42 --application="Default App"
+    bin/console pia:user:promote api@pialab.io --role=ROLE_DPO 
 fi

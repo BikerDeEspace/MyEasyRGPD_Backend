@@ -16,12 +16,12 @@ class UsersFunctionalAdminCest
 {
     private $firstname = 'John';
     private $lastname = 'Doe';
-    private $email = 'admin-selenium@lusis.lu';
+    private $email = 'admin-selenium@pialab.io';
     private $password = 'kFR5C1EGaPZDFJ1A';
 
     private $dpoFirstname = 'DpoJohn';
     private $dpoLastname = 'DpoDoe';
-    private $dpoEmail = 'dpo-selenium@lusis.lu';
+    private $dpoEmail = 'dpo-selenium@pialab.io';
     private $dpoPassword = 'DpokFR5C1EGaPZDFJ1A';
 
     private $structure = 'AdminStructure SAS';

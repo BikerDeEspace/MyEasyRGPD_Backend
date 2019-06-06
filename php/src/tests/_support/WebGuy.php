@@ -59,7 +59,7 @@ class WebGuy extends \Codeception\Actor
     public function getUser()
     {
         if (!isset($this->user)) {
-            $this->user = 'ci@lusis.lu';
+            $this->user = 'ci@pialab.io';
             if (getenv('TEST_USER')) {
                 $this->user = getenv('TEST_USER');
             }
