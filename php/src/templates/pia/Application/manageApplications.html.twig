@@ -1,0 +1,198 @@
+{% trans_default_domain 'Pia' %}
+
+{% extends 'pia/Layout/base.html.twig' %}
+
+{% import 'pia/Layout/_macros.html.twig' as macro %}
+
+{% block title %}
+    {{ 'pia.applications.title'|trans }}
+{% endblock title %}
+
+{% block navbar %}
+    {% include 'pia/Layout/navbar.html.twig' with {
+        'activeItem' : 'applications'
+    } %}
+{% endblock navbar %}
+
+{% block body %}
+
+    <div class="ui grid">
+
+        <div class="twelve wide column">
+
+            <div class="ui segment">
+
+                <h2>
+                    <a href="?limit=1000" class="ui tiny button" style="float:right;">{{ 'pia.actions.display'|trans }}
+                        1000</a>
+                    {{ 'pia.applications.title'|trans }}
+                </h2>
+
+                <div class="table responsive wrapper">
+                    <table class="ui compact striped table">
+                        <thead>
+                            <tr>
+                                <th>{{ 'pia.applications.list.id'|trans }}</th>
+                                <th>{{ 'pia.applications.list.name'|trans }}</th>
+                                <th>{{ 'pia.applications.list.url'|trans }}</th>
+                                <th>{{ 'pia.applications.list.urls'|trans }}</th>
+                                <th>{{ 'pia.applications.list.grant_types'|trans }}</th>
+                                <th class="right aligned">
+                                    <i class="cog icon"></i>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            {% for application in applications %}
+
+                                {% set applicationInfos %}
+                                <table class="ui striped table">
+                                    <tbody>
+                                        <tr>
+                                            <td class="right aligned">
+                                                <b>{{ 'pia.applications.list.client_id'|trans }}:</b>
+                                            </td>
+                                            <td>
+                                                <span class="ui teal large label" style="font-family: Mono;">
+                                                    {{ application.publicId }}
+                                                </span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="right aligned">
+                                                <b>{{ 'pia.applications.list.client_secret'|trans }}</b>
+                                            </td>
+                                            <td>
+                                                <span class="ui teal large label" style="font-family: Mono;">
+                                                    {{ application.secret }}
+                                                </span>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                {% endset %}
+
+                                <tr>
+                                    <td>{{ application.id }}</td>
+                                    <td>{{ application.name }}</td>
+                                    <td>
+                                        {% if application.url %}
+                                            <a class="ui label" href="{{ application.url }}">
+                                                {{ application.url }}
+                                            </a>
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        {% for url in application.redirectUris %}
+                                            <span class="ui label">{{ url }}</span>
+                                        {% endfor %}
+                                    </td>
+                                    <td>
+                                        {% for grantType in application.allowedGrantTypes %}
+                                            <span class="ui label">{{ grantType }}</span>
+                                        {% endfor %}
+                                    </td>
+                                    <td class="right aligned">
+                                        <div class="ui small buttons">
+                                            <a class="ui blue tiny icon button" data-popup="data-popup" data-html="{{ applicationInfos|e }}">
+                                                <i class="key icon"></i>
+                                            </a>
+                                            <a class="ui green tiny icon button" title="{{ 'pia.actions.edit'|trans }}" data-modal="data-modal" href="{{ path('manage_applications_edit_application', {'applicationId':application.id}) }}">
+                                                <i class="pencil icon"></i>
+                                            </a>
+                                            <a class="ui red tiny icon button" title="{{ 'pia.actions.remove'|trans }}" data-modal="data-modal" href="{{ path('manage_applications_remove_application', {'applicationId':application.id}) }}">
+                                                <i class="trash icon"></i>
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+
+                        </tbody>
+                    </table>
+                </div>
+                {{ pagerfanta(applications, 'semantic_ui') }}
+            </div>
+        </div>
+
+        <div class="four wide column">
+            {% if is_granted('CAN_CREATE_APPLICATION') %}
+                <div class="ui segment">
+
+                    <h2>{{ 'pia.applications.add.title'|trans }}</h2>
+
+                    {{ render(controller('PiaApi\\Controller\\BackOffice\\ApplicationController:addApplicationAction')) }}
+
+                </div>
+            {% endif %}
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    <script>
+        $(document).on('click', 'a[data-modal]', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            e.stopImmediatePropagation();
+
+            let button = $(e.currentTarget);
+            let url = button.attr('href');
+
+            let modal = $('.ui.modal');
+            modal.hide();
+
+            $.ajax({
+                url: url,
+                success: (html) => {
+                    let modal = $('.ui.modal');
+
+                    modal.find('.header').html(button.attr('title'));
+
+                    modal
+                        .find('.content')
+                        .html(html);
+
+                    modal.find('.content .negative, .content .deny, .content .cancel').on('click', (e) => {
+                        $(e.currentTarget).closest('.ui.modal').modal('hide');
+                    });
+
+                    modal.find('.actions').remove();
+
+                    $('.ui.checkbox').checkbox();
+                    $('.ui.dropdown').dropdown();
+
+                    modal.modal('show');
+                }
+            })
+        });
+    </script>
+
+    <script>
+        $(document).ready(() => {
+            $(document).on('click', 'a.application-form-add-uri', (e) => {
+                e.preventDefault();
+                let list = $(e.currentTarget).closest('form').find($(e.currentTarget).attr('data-list'));
+
+                let counter = list.data('widget-counter') | list.children().length;
+
+                if (!counter) {
+                    counter = list.children().length;
+                }
+
+                let newWidget = list.attr('data-prototype');
+                newWidget = newWidget.replace(/__name__/g, counter);
+
+                counter++;
+                list.data(' widget-counter', counter);
+
+                let newElem = $(list.attr('data-widget-tags')).html(newWidget);
+                newElem.appendTo(list);
+            });
+        });
+    </script>
+{% endblock javascripts %}
