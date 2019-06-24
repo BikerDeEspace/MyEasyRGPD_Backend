@@ -1,0 +1,33 @@
+{% trans_default_domain 'Pia' %}
+
+{% extends "pia/Layout/base.html.twig" %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('assets/css/semantic-librinfo.min.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('assets/css/styles-public.css') }}"/>
+{% endblock %}
+
+{% block body %}
+
+    <div class="ui middle aligned center aligned grid">
+        <div class="column" style="transform: translateY(75%); max-width:400px">
+            <h2 class="ui image">
+                <img src="{{ asset('assets/img/pia-lab.png') }}" class="image">
+            </h2>
+
+            <div class="ui segments">
+                <div class="ui segment">
+                    <span class="ui teal header">{{ 'pia.users.resetting.success.title'|trans }}</span>
+                </div>
+                <div class="ui teal segment">
+                    <p>{{ 'pia.users.resetting.success.password_reset_successfully'|trans }}</p>
+                    {% if app.user and app.user.application and app.user.application.url is not null %}
+                        <a href="{{ app.user.application.url }}" class="ui teal button">
+                            {{ 'pia.users.resetting.success.return_to_application'|trans }}
+                        </a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

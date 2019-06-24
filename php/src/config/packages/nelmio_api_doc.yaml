@@ -1,0 +1,25 @@
+nelmio_api_doc:
+    documentation:
+        schemes: [http]
+        info:
+            title: Pialab API
+            description: API documentation for Pialab
+            version: 1.2.4
+        securityDefinitions:
+            Bearer:
+                type: apiKey
+                description: 'Value: Bearer {YourToken}'
+                name: Authorization
+                in: header
+        security:
+            - Bearer: []
+        consumes:
+            - application/json
+        produces:
+            - application/json
+
+    areas:
+        default:
+            path_patterns:
+                - '/oauth/v2/token'
+                - '%api_pattern%' # see services.yaml
