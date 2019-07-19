@@ -61,6 +61,7 @@ RUN ["chmod", "+x", "bin/console"]
 
 # COMPOSER INSTALL
 RUN composer install --no-interaction --no-scripts
+RUN composer update
 
 # ASSETS INSTALL & CACHE CLEAN
 RUN bin/console assets:install --no-interaction
